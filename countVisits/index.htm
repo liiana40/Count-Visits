@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <!--
+      JavaScript Project_Counter
+
+      Author: M. Liliana Ignat
+      Date: 7/11/2017  
+
+      Filename: index.htm
+   -->
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+   <title>Project_Counter</title>
+   <link rel="stylesheet" href="styles.css" />
+   <script src="modernizr.custom.65897.js"></script>
+</head>
+<body>
+   <header>
+      <h1>
+         Project_Counter
+      </h1>
+   </header>
+   
+<form>
+<center>
+<div id='time'></div>
+<p id = result></p>
+<input name="update" type="button" value="Revisit  Page" OnClick="history.go(0)">
+<input name="reset" type="button" value="Reset Counter" OnClick="ResetCounts()">
+</center>
+</form> 
+
+<script>
+
+function getCookieVal (offset) {
+var endstr = document.cookie.indexOf (";", offset);
+if (endstr == -1)
+endstr = document.cookie.length;
+return unescape(document.cookie.substring(offset, endstr));
+}
+function GetCookie (name) {
+var arg = name + "=";
+var alen = arg.length;
+var clen = document.cookie.length;
+var i = 0;
+while (i < clen) {
+var j = i + alen;
+if (document.cookie.substring(i, j) == arg)
+return getCookieVal (j);
+i = document.cookie.indexOf(" ", i) + 1;
+if (i == 0) 
+break; 
+}
+return null;
+}
+function SetCookie (name, value) {
+var argv = SetCookie.arguments;
+var argc = SetCookie.arguments.length;
+var expires = (2 < argc) ? argv[2] : null;
+var path = (3 < argc) ? argv[3] : null;
+var domain = (4 < argc) ? argv[4] : null;
+var secure = (5 < argc) ? argv[5] : false;
+document.cookie = name + "=" + escape (value) +
+((expires == null) ? "" : ("; expires=" + expires.toGMTString())) +
+((path == null) ? "" : ("; path=" + path)) +
+((domain == null) ? "" : ("; domain=" + domain)) +
+((secure == true) ? "; secure" : "");
+}
+
+function DisplayInfo() {
+var date = new Date();
+var expdate = new Date();
+var visit;
+expdate.setTime(expdate.getTime() +  (24 * 60 * 60 * 1000 * 365)); 
+if(!(visit = GetCookie("visit"))) 
+visit = 0;
+visit++;
+SetCookie("visit", visit, expdate, "/", null, false);
+var message;
+var n = date.toDateString();
+var time = date.toLocaleTimeString();
+if(visit == 1) {
+	document.getElementById('time').innerHTML = n + ' ' + time;
+	message="         Welcome to my page!  Bookmark it, if you like it	" ;
+}
+
+if(visit== 2) {
+	document.getElementById('time').innerHTML = n + ' ' + time;
+	message="           Nice to see you coming back !	" ;
+}
+
+if(visit == 3) {
+	document.getElementById('time').innerHTML = n + ' ' + time;
+	message="               Oh, nice to see you again!	" ;
+}
+
+if(visit == 4) {
+	document.getElementById('time').innerHTML = n + ' ' + time;
+	message="            You must be inquisitive!	" ; 
+}
+
+if(visit == 5) {
+	document.getElementById('time').innerHTML = n + ' ' + time;
+	message="      You're practically consistent!	" ;
+}
+
+if(visit == 6) {
+	document.getElementById('time').innerHTML = n + ' ' + time;
+	message="              It became a hobby!	" ;
+}
+
+if(visit == 7) {
+	document.getElementById('time').innerHTML = n + ' ' + time;
+	message="              Best thing to do!	"; 
+}
+
+if(visit == 8) {
+	document.getElementById('time').innerHTML = n + ' ' + time;
+	message="            Don't you ever snooze?	";
+}
+
+if(visit == 9) {
+	document.getElementById('time').innerHTML = n + ' ' + time;
+	message="                      It's my life!!!	" ; 
+}
+
+if(visit >= 10) {
+	document.getElementById('time').innerHTML = n + ' ' + time;
+	
+	message="  Rent is due on the 5th of the month!";
+}
+	document.getElementById('result').innerHTML = 
+	("\n"+"Your browser has visited this page               \n"
+            +"                              "+visit+"\n"
+            +"                          time(s)."+"\n"+"\n"
+            + message);
+}
+function ResetCounts() {
+var expdate = new Date();
+expdate.setTime(expdate.getTime() +  (24 * 60 * 60 * 1000 * 365)); 
+visit = 0;
+SetCookie("visit", visit, expdate , "/", null, false);
+history.go(0);
+}
+
+window.onload=DisplayInfo
+</script>
+
+
